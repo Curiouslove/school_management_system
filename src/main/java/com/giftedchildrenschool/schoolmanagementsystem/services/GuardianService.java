@@ -6,4 +6,6 @@ import com.giftedchildrenschool.schoolmanagementsystem.payload.request.GuardianR
 public interface GuardianService {
     Guardian save(Guardian guardian);
     Guardian register(GuardianRequest guardianRequest);
+    Guardian findGuardianById(Long id);
+    void deleteGuardianById(Long id);
 }

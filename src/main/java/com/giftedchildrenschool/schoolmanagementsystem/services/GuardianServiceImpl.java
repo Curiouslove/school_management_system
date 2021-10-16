@@ -2,8 +2,11 @@ package com.giftedchildrenschool.schoolmanagementsystem.services;
 
 import com.giftedchildrenschool.schoolmanagementsystem.data.model.Guardian;
 import com.giftedchildrenschool.schoolmanagementsystem.data.repository.GuardianRepository;
+import com.giftedchildrenschool.schoolmanagementsystem.exception.GuardianException;
 import com.giftedchildrenschool.schoolmanagementsystem.payload.request.GuardianRequest;
 import org.springframework.stereotype.Service;
+
+import java.util.Optional;
 
 @Service
 public class GuardianServiceImpl implements GuardianService{
@@ -29,5 +32,16 @@ public class GuardianServiceImpl implements GuardianService{
         guardian.setPassword(guardianRequest.getPassword());
         save(guardian);
         return guardian;
+    }
+
+    @Override
+    public Guardian findGuardianById(Long id) {
+        return guardianRepository.findById(id).orElseThrow(() -> new GuardianException("Guardian does not exist"));
+    }
+
+    @Override
+    public void deleteGuardianById(Long id) {
+        Guardian guardian = findGuardianById(id);
+        guardianRepository.deleteById(guardian.getGuardianId());
     }
 }
