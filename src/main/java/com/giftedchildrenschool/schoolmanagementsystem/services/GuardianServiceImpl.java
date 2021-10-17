@@ -17,12 +17,6 @@ public class GuardianServiceImpl implements GuardianService{
         this.guardianRepository = guardianRepository;
     }
 
-
-    @Override
-    public Guardian save(Guardian guardian) {
-     return guardianRepository.save(guardian);
-    }
-
     @Override
     public Guardian register(GuardianRequest guardianRequest) {
         Guardian guardian =  new Guardian();
@@ -30,7 +24,7 @@ public class GuardianServiceImpl implements GuardianService{
         guardian.setPhoneNUmber(guardianRequest.getPhoneNUmber());
         guardian.setEmail(guardianRequest.getEmail());
         guardian.setPassword(guardianRequest.getPassword());
-        save(guardian);
+        guardianRepository.save(guardian);
         return guardian;
     }
 
@@ -41,7 +35,8 @@ public class GuardianServiceImpl implements GuardianService{
 
     @Override
     public void deleteGuardianById(Long id) {
-        Guardian guardian = findGuardianById(id);
-        guardianRepository.deleteById(guardian.getGuardianId());
+//        Guardian guardian = findGuardianById(id);
+//        guardianRepository.deleteById(guardian.getGuardianId());
+        guardianRepository.deleteById(id);
     }
 }

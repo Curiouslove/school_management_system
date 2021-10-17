@@ -2,7 +2,9 @@ package com.giftedchildrenschool.schoolmanagementsystem.services;
 
 import com.giftedchildrenschool.schoolmanagementsystem.data.model.Guardian;
 import com.giftedchildrenschool.schoolmanagementsystem.data.repository.GuardianRepository;
+import com.giftedchildrenschool.schoolmanagementsystem.exception.GuardianException;
 import com.giftedchildrenschool.schoolmanagementsystem.payload.request.GuardianRequest;
+import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -12,10 +14,11 @@ import org.springframework.boot.test.context.SpringBootTest;
 import static org.assertj.core.api.Assertions.*;
 
 @SpringBootTest
+@Slf4j
 class GuardianServiceImplTest {
 
     @Autowired
-    GuardianServiceImpl guardianService;
+    GuardianService guardianService;
 
     @BeforeEach
     void setUp() {
@@ -24,24 +27,6 @@ class GuardianServiceImplTest {
 
     @AfterEach
     void tearDown() {
-    }
-
-    @Test
-    void saveGuardian() {
-//        given
-        Guardian guardian = new Guardian();
-        guardian.setFullName("okum love");
-        guardian.setPhoneNUmber("09020000745");
-        guardian.setEmail("collinslove624@yahoo.com");
-        guardian.setPassword("1234");
-
-        assertThat(guardian.getGuardianId()).isNull();
-
-//        when
-        guardianService.save(guardian);
-
-//        assert
-        assertThat(guardian.getGuardianId()).isNotNull();
     }
 
     @Test
@@ -91,11 +76,17 @@ class GuardianServiceImplTest {
         assertThat(guardian.getGuardianId()).isNotNull();
 
 ////        when
-        Long id = guardian.getGuardianId();
-        guardianService.deleteGuardianById(id);
+        guardianService.deleteGuardianById(guardian.getGuardianId());
 //
 ////        assert
-        assertThat(guardian.getGuardianId()).isNull();
-
+        try {
+            assertThat(guardianService.findGuardianById(guardian.getGuardianId())).isNull();
+        }catch (GuardianException ex){
+            log.info("exception -> ", ex);
+        }
     }
 }
+
+//  assertThat(productRepositoryImpl.findById(110L).orElse(null)).isNotNull();
+//        productRepositoryImpl.deleteById(110L);
+//        assertThat(productRepositoryImpl.findById(110L).orElse(null)).isNull();

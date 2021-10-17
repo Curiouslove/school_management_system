@@ -22,7 +22,7 @@ public class GuardianController {
         return new ResponseEntity<>(guardian, HttpStatus.OK);
     }
 
-    @GetMapping("/get-guardian/{id}")
+    @GetMapping("/getGuardianById/{id}")
     public ResponseEntity<?> findGuardian(@PathVariable Long id){
         Guardian guardian = guardianService.findGuardianById(id);
         return new ResponseEntity<>(guardian, HttpStatus.OK);
