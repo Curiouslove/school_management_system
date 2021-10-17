@@ -6,7 +6,6 @@ import com.giftedchildrenschool.schoolmanagementsystem.exception.GuardianExcepti
 import com.giftedchildrenschool.schoolmanagementsystem.payload.request.GuardianRequest;
 import org.springframework.stereotype.Service;
 
-import java.util.Optional;
 
 @Service
 public class GuardianServiceImpl implements GuardianService{
@@ -35,8 +34,7 @@ public class GuardianServiceImpl implements GuardianService{
 
     @Override
     public void deleteGuardianById(Long id) {
-//        Guardian guardian = findGuardianById(id);
-//        guardianRepository.deleteById(guardian.getGuardianId());
-        guardianRepository.deleteById(id);
+        Guardian guardian = findGuardianById(id);
+        guardianRepository.deleteById(guardian.getGuardianId());
     }
 }
